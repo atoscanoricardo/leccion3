@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+
 app.use(bodyParser.json());
 //llamamos el controlador que se encarga de gestionar la base de datos
 const controller = require("./Controller");
@@ -17,5 +18,52 @@ app.get("/users", (req, resp)=>{
     //recibe por parametros req que es igual a la consulta request(consulta) y el res que equivale al response(respuesta)
     controller.getUsers(req, resp);
 })
+
+//Traer un usuario por su id
+app.get("/users/:id", function(req, res) {
+  let { id } = req.params;
+  controller.getUser(id, res);
+});
+
+//Agregar un usuario
+app.post("/users", function(req, res) {
+  let { user } = req.body;
+  controller.setUser(user, res);
+});
+
+//Agregar una lista de usuario
+app.post("/users/:user_id/lists", (req, res) => {
+  let { user_id } = req.params;
+  let { list } = req.body;
+  controller.setUserList(user_id, list, res);
+});
+
+//Traer las listas de un usuario
+app.get("/users/:id/lists", function(req, res) {
+  let { id } = req.params;
+  controller.getUserLists(id, res);
+});
+
+//Traer una lista específica de un usuario
+app.get("/users/:user_id/lists/:list_id", (req, res) => {
+  let { user_id, list_id } = req.params;
+  controller.getUserList(user_id, list_id, res);
+});
+
+//Agregar un artista
+app.post("/artists/", (req, res) => {
+  let { artist } = req.body;
+  controller.setArtist(artist, res);
+});
+
+app.get("/artists/", (req, res) => {
+  controller.geArtists(res);
+});
+
+app.get("/artists/:id", (req, res) => {
+  let { id } = req.params;
+  controller.geArtist(id, res);
+});
+
 //exportamos la constante app con toda la configuracion de las rutas
 exports.app = app

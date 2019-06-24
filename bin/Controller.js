@@ -35,4 +35,3 @@ class Controller{
 }
 // se exporta elobjeto controlador crado a partir de la clase Controller
 exports.controller = new Controller();
-
