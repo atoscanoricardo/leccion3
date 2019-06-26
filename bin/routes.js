@@ -56,13 +56,32 @@ app.post("/artists/", (req, res) => {
   controller.setArtist(artist, res);
 });
 
+// Traer todos los artistas
 app.get("/artists/", (req, res) => {
-  controller.geArtists(res);
+  controller.getArtists(res);
 });
 
+//traer un artista por su id
 app.get("/artists/:id", (req, res) => {
   let { id } = req.params;
-  controller.geArtist(id, res);
+  controller.getArtist(id, res);
+});
+
+//Guardar una cancion
+app.post("/songs", (req, res) => {
+  let { song } = req.body;
+  controller.setSong(song, res);
+});
+
+//traer todas las canciones
+app.get("/songs", (req, res) => {
+  controller.getSongs(res);
+});
+
+//traer una cancion
+app.get("/songs/:id", (req, res) => {
+  let { id } = req.params;
+  controller.getSong(id, res);
 });
 
 //exportamos la constante app con toda la configuracion de las rutas
